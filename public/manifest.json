@@ -1,0 +1,44 @@
+{
+  "name": "KUSANGA KITADI — A força está na ligação",
+  "short_name": "Kusanga Kitadi",
+  "description": "Localize caixas automáticos (ATM) e consulte a disponibilidade de numerário em tempo real em Luanda, Angola. Saiba onde levantar.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F7F4EC",
+  "theme_color": "#26362F",
+  "orientation": "portrait-primary",
+  "lang": "pt-AO",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["finance", "utilities", "navigation"]
+}

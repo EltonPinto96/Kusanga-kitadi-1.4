@@ -1,0 +1,236 @@
+/*
+ * Kusanga Kitadi — Design System Oficial (Tecnologia Africana Premium)
+ * Tipografia: Sora (Títulos/Marca) + Manrope (Interface/Textos)
+ * Paleta Oficial:
+ * - Verde floresta: #26362F (Identidade principal / navegação)
+ * - Ouro artesanal: #C09A5B (Destaques premium / detalhes nobres)
+ * - Terracota: #A75F43 (Detalhes gráficos)
+ * - Areia natural: #E9DCC4 (Superfícies secundárias)
+ * - Carvão: #343D3A (Textos principais)
+ * - Marfim: #F7F4EC (Fundo principal)
+ * - Verde suave: #718477 (Elementos secundários)
+ */
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+@import "leaflet/dist/leaflet.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Sora", "Manrope", ui-sans-serif, sans-serif;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+
+  /* Tokens Kusanga Kitadi */
+  --color-brand-forest: var(--brand-forest);
+  --color-brand-gold: var(--brand-gold);
+  --color-brand-terracotta: var(--brand-terracotta);
+  --color-brand-sand: var(--brand-sand);
+  --color-brand-charcoal: var(--brand-charcoal);
+  --color-brand-ivory: var(--brand-ivory);
+  --color-brand-softgreen: var(--brand-softgreen);
+
+  /* Cores Funcionais ATM */
+  --color-status-available: var(--status-available);
+  --color-status-empty: var(--status-empty);
+  --color-status-offline: var(--status-offline);
+  --color-status-stale: var(--status-stale);
+}
+
+:root {
+  --radius: 0.625rem;
+  /* Fundo principal: Marfim */
+  --background: oklch(0.965 0.012 88); /* #F7F4EC */
+  /* Textos principais: Carvão */
+  --foreground: oklch(0.32 0.015 165); /* #343D3A */
+
+  --card: oklch(0.995 0.005 85);
+  --card-foreground: oklch(0.32 0.015 165);
+  --popover: oklch(0.995 0.005 85);
+  --popover-foreground: oklch(0.32 0.015 165);
+
+  /* Identidade principal: Verde floresta #26362F */
+  --primary: oklch(0.31 0.038 160);
+  --primary-foreground: oklch(0.965 0.012 88);
+
+  /* Superfícies secundárias: Areia natural #E9DCC4 */
+  --secondary: oklch(0.89 0.03 85);
+  --secondary-foreground: oklch(0.31 0.038 160);
+
+  --muted: oklch(0.92 0.02 85);
+  --muted-foreground: oklch(0.57 0.025 155); /* Verde suave #718477 */
+
+  --accent: oklch(0.89 0.03 85);
+  --accent-foreground: oklch(0.31 0.038 160);
+
+  --destructive: oklch(0.53 0.22 28); /* Vermelho funcional */
+  --destructive-foreground: oklch(0.985 0.005 88);
+
+  --border: oklch(0.88 0.02 85); /* Bordas suaves cor areia */
+  --input: oklch(0.86 0.02 85);
+  --ring: oklch(0.69 0.105 82); /* Ouro artesanal */
+
+  /* Cores Oficiais Kusanga Kitadi */
+  --brand-forest: oklch(0.31 0.038 160); /* #26362F */
+  --brand-gold: oklch(0.69 0.105 82); /* #C09A5B */
+  --brand-terracotta: oklch(0.55 0.125 45); /* #A75F43 */
+  --brand-sand: oklch(0.89 0.03 85); /* #E9DCC4 */
+  --brand-charcoal: oklch(0.32 0.015 165); /* #343D3A */
+  --brand-ivory: oklch(0.965 0.012 88); /* #F7F4EC */
+  --brand-softgreen: oklch(0.57 0.025 155); /* #718477 */
+
+  /* Cores funcionais dos ATM */
+  --status-available: oklch(0.52 0.15 145); /* Verde com dinheiro #2E7D32 */
+  --status-empty: oklch(0.53 0.22 28); /* Vermelho sem dinheiro #C62828 */
+  --status-offline: oklch(0.50 0.03 220); /* Cinzento fora de serviço #546E7A */
+  --status-stale: oklch(0.65 0.16 70); /* Amarelo/Âmbar #D97706 */
+}
+
+.dark {
+  --background: oklch(0.20 0.025 160); /* Verde floresta escurecido de fundo */
+  --foreground: oklch(0.965 0.012 88); /* Marfim */
+  --card: oklch(0.24 0.028 160);
+  --card-foreground: oklch(0.965 0.012 88);
+  --popover: oklch(0.24 0.028 160);
+  --popover-foreground: oklch(0.965 0.012 88);
+  --primary: oklch(0.69 0.105 82); /* Ouro artesanal como principal no escuro */
+  --primary-foreground: oklch(0.20 0.025 160);
+  --secondary: oklch(0.28 0.032 160);
+  --secondary-foreground: oklch(0.965 0.012 88);
+  --muted: oklch(0.28 0.032 160);
+  --muted-foreground: oklch(0.68 0.025 155);
+  --accent: oklch(0.28 0.032 160);
+  --accent-foreground: oklch(0.965 0.012 88);
+  --destructive: oklch(0.58 0.22 28);
+  --destructive-foreground: oklch(0.985 0.005 88);
+  --border: oklch(0.30 0.025 160);
+  --input: oklch(0.30 0.025 160);
+  --ring: oklch(0.69 0.105 82);
+
+  --brand-forest: oklch(0.31 0.038 160);
+  --brand-gold: oklch(0.69 0.105 82);
+  --brand-terracotta: oklch(0.55 0.125 45);
+  --brand-sand: oklch(0.89 0.03 85);
+  --brand-charcoal: oklch(0.32 0.015 165);
+  --brand-ivory: oklch(0.965 0.012 88);
+  --brand-softgreen: oklch(0.57 0.025 155);
+
+  --status-available: oklch(0.58 0.16 145);
+  --status-empty: oklch(0.58 0.22 28);
+  --status-offline: oklch(0.55 0.03 220);
+  --status-stale: oklch(0.70 0.16 70);
+}
+
+.status-available {
+  color: var(--status-available);
+  background-color: color-mix(in oklab, var(--status-available) 12%, var(--background));
+}
+
+.status-empty {
+  color: var(--status-empty);
+  background-color: color-mix(in oklab, var(--status-empty) 12%, var(--background));
+}
+
+.status-offline {
+  color: var(--status-offline);
+  background-color: color-mix(in oklab, var(--status-offline) 12%, var(--background));
+}
+
+.status-stale {
+  color: var(--status-stale);
+  background-color: color-mix(in oklab, var(--status-stale) 14%, var(--background));
+}
+
+.status-uncertain {
+  color: oklch(0.68 0.18 55);
+  background-color: color-mix(in oklab, oklch(0.68 0.18 55) 15%, var(--background));
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+}
+
+/* Transições e Animações Suaves de Secção */
+@keyframes sectionFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.section-fade-enter {
+  animation: sectionFadeIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-fade-enter,
+  .radar-glow,
+  .animate-ping,
+  .animate-spin {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* Efeito Radar Pulso Suave */
+@keyframes radarPulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.2;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+}
+
+.radar-glow {
+  animation: radarPulse 3s ease-in-out infinite;
+}

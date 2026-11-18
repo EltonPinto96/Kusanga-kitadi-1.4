@@ -1,0 +1,36 @@
+<!-- LOVABLE:BEGIN -->
+> [!IMPORTANT]
+> This project is connected to [Lovable](https://lovable.dev). Avoid rewriting
+> published git history — force pushing, or rebasing/amending/squashing commits
+> that are already pushed — as it rewrites history on Lovable's side and the
+> user will likely lose their project history.
+>
+> Commits you push to the connected branch sync back to Lovable and show up in
+> the editor, so keep the branch in a working state.
+
+## What Lovable manages
+
+Rules outside this block are the project's own. Change the pieces below in
+Lovable, not by hand. With the [Lovable MCP](https://mcp.lovable.dev)
+connected, `send_message` asks Lovable to do it; otherwise ask the user to
+use the editor.
+
+- **Database.** Do not add or edit `supabase/migrations/` or `drizzle/`.
+  Ask Lovable to change the schema.
+- **Generated files.** Do not edit a file whose header says it is automatically
+  generated.
+- **AI gateway.** Keep model calls on Lovable's gateway, and keep
+  `LOVABLE_API_KEY` out of browser code.
+- **Connectors.** Lovable provides native connectors. `list_connectors` shows
+  which are enabled; `add_connector` only returns the dashboard link. When a
+  connector is enabled, calls go through the connector gateway and need
+  `LOVABLE_API_KEY`. When Lovable does not provide one, users can bring their
+  own key and store it in Secrets.
+- **Secrets.** Lovable manages them. Do not put secret values in the repo.
+<!-- LOVABLE:END -->
+
+## ATM KOTA
+
+- Keep the pilot interface in reusable route-adjacent components, with demonstration records isolated from live data and visibly labelled, so examples can never be mistaken for verified ATMs.
+- Keep the ATM KOTA first screen public and use its in-page navigation for the MVP's five areas, so unauthenticated ATM discovery remains available while account-dependent features are introduced later.
+- **Auto Git Sync:** A cada duas etapas/funcionalidades concluídas no projeto, realizar automaticamente um `git add`, `git commit` com mensagem descritiva e `git push origin main`, mantendo o repositório GitHub e o Lovable sempre sincronizados sem necessidade de lembrete do utilizador.
