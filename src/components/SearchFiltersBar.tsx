@@ -6,10 +6,12 @@ import {
   MapPin,
   Navigation,
   Building2,
+  Compass,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import type { DemoAvailability } from "@/lib/atm-demo-data";
+import { ANGOLA_PROVINCES } from "@/lib/angola-data";
 
 type Filter = "all" | DemoAvailability;
 
@@ -127,10 +129,26 @@ export function SearchFiltersBar({
           <MapPin className="size-4 text-[#C09A5B]" aria-hidden="true" />
           <span className="sr-only">Filtrar por município</span>
           <select value={selectedMunicipality} onChange={(event) => setSelectedMunicipality(event.target.value)} className="h-full w-full bg-transparent text-xs font-semibold outline-none cursor-pointer">
-            <option value="all">Todos os municípios</option>
-            {municipalityOptions.map((m) => (
-              <option key={m} value={m}>{m}</option>
+            <option value="all">Todos os municípios (Luanda e Icolo e Bengo)</option>
+            {ANGOLA_PROVINCES.map((prov) => (
+              <optgroup key={prov.code} label={`Província de ${prov.name} (${prov.municipalities.length}) · Sede: ${prov.capital}`}>
+                {prov.municipalities.map((m) => (
+                  <option key={m} value={m}>
+                    {m} {m === prov.capital ? "(Capital)" : ""}
+                  </option>
+                ))}
+              </optgroup>
             ))}
+            {/* Outras áreas detetadas que não estejam na lista oficial */}
+            {municipalityOptions.filter(m => !ANGOLA_PROVINCES.some(p => p.municipalities.includes(m))).length > 0 && (
+              <optgroup label="Outras localidades detetadas">
+                {municipalityOptions
+                  .filter(m => !ANGOLA_PROVINCES.some(p => p.municipalities.includes(m)))
+                  .map((m) => (
+                    <option key={m} value={m}>{m}</option>
+                  ))}
+              </optgroup>
+            )}
           </select>
         </label>
       </div>
