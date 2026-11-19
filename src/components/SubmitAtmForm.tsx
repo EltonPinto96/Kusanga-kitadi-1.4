@@ -6,6 +6,7 @@ import { CircleAlert, CircleCheck, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { ANGOLA_PROVINCES, ANGOLA_BANKS } from "@/lib/angola-data";
 
 // ---- Validação ----
 const submitAtmSchema = z.object({
@@ -25,32 +26,7 @@ const submitAtmSchema = z.object({
 
 export type SubmitAtmFormData = z.infer<typeof submitAtmSchema>;
 
-const BANKS = [
-  "Banco Atlântico",
-  "BFA — Banco de Fomento Angola",
-  "BIC — Banco BIC",
-  "BAI — Banco Angolano de Investimentos",
-  "Millennium Atlântico",
-  "BPC — Banco de Poupança e Crédito",
-  "Banco Económico",
-  "BCGTA",
-  "SOL Banco",
-  "Outro",
-];
-
-const MUNICIPALITIES = [
-  "Belas",
-  "Cacuaco",
-  "Cazenga",
-  "Icolo e Bengo",
-  "Kilamba Kiaxi",
-  "Luanda",
-  "Maianga",
-  "Rangel",
-  "Sambizanga",
-  "Talatona",
-  "Viana",
-];
+const BANKS = ANGOLA_BANKS.map((b) => b.name);
 
 interface SubmitAtmFormProps {
   /** Chamado com os dados quando o formulário é enviado com sucesso.
@@ -169,9 +145,15 @@ export function SubmitAtmForm({ onSubmit, onCancel }: SubmitAtmFormProps) {
             {...register("municipality")}
             className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
           >
-            <option value="">Seleccione</option>
-            {MUNICIPALITIES.map((m) => (
-              <option key={m} value={m}>{m}</option>
+            <option value="">Seleccione o município</option>
+            {ANGOLA_PROVINCES.map((prov) => (
+              <optgroup key={prov.code} label={`Província de ${prov.name} (${prov.municipalities.length})`}>
+                {prov.municipalities.map((m) => (
+                  <option key={m} value={m}>
+                    {m} {m === prov.capital ? "(Capital)" : ""}
+                  </option>
+                ))}
+              </optgroup>
             ))}
           </select>
           {errors.municipality && <p className="text-xs text-destructive">{errors.municipality.message}</p>}

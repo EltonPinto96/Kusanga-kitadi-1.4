@@ -39,10 +39,11 @@ interface SearchFiltersBarProps {
 const QUICK_SUGGESTIONS = [
   { label: "BAI", type: "bank" as const },
   { label: "BFA", type: "bank" as const },
-  { label: "Maianga", type: "area" as const },
+  { label: "Ingombota", type: "area" as const },
   { label: "Talatona", type: "area" as const },
+  { label: "Maianga", type: "area" as const },
   { label: "Viana", type: "area" as const },
-  { label: "Kilamba", type: "area" as const },
+  { label: "Catete", type: "area" as const },
   { label: "Com dinheiro", type: "status" as const },
 ];
 

@@ -58,6 +58,7 @@ import { FloatingNearbyButton } from "@/components/FloatingNearbyButton";
 import { SearchFiltersBar } from "@/components/SearchFiltersBar";
 import { PrivacyPolicyModal } from "@/components/PrivacyPolicyModal";
 import { TermsOfUseModal } from "@/components/TermsOfUseModal";
+import { MUNICIPALITY_NAMES } from "@/lib/angola-data";
 
 type Section = "home" | "map" | "search" | "favorites" | "profile" | "admin";
 type Filter = "all" | DemoAvailability;
@@ -233,19 +234,7 @@ function Index() {
 
   const municipalityOptions = useMemo(() => {
     const set = new Set<string>();
-    const knownMunicipalities = [
-      "Belas",
-      "Cacuaco",
-      "Cazenga",
-      "Icolo e Bengo",
-      "Kilamba Kiaxi",
-      "Luanda",
-      "Maianga",
-      "Quiçama",
-      "Talatona",
-      "Viana",
-    ];
-    knownMunicipalities.forEach((m) => set.add(m));
+    MUNICIPALITY_NAMES.forEach((m) => set.add(m));
     atmList.forEach((atm) => {
       if (atm.area) {
         const parts = atm.area.split(",");

@@ -1,5 +1,7 @@
 -- ============================================================
--- ATM KOTA — Províncias e Municípios de Angola (Lei nº 3/22, 2022)
+-- KUSANGA KITADI — Províncias e Municípios de Angola (DPA Actualizada)
+-- Província de Luanda (16 Municípios, Sede: Ingombota)
+-- Província do Icolo e Bengo (7 Municípios, Sede: Catete)
 -- Migration: 009_provinces_municipalities.sql
 -- ============================================================
 
@@ -11,6 +13,7 @@ CREATE TABLE IF NOT EXISTS provinces (
   id         UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   name       TEXT NOT NULL UNIQUE,
   code       TEXT NOT NULL UNIQUE,
+  capital    TEXT,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
@@ -18,6 +21,7 @@ CREATE TABLE IF NOT EXISTS municipalities (
   id          UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   province_id UUID NOT NULL REFERENCES provinces(id) ON DELETE CASCADE,
   name        TEXT NOT NULL,
+  is_capital  BOOLEAN NOT NULL DEFAULT false,
   created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   UNIQUE(province_id, name)
 );
@@ -74,53 +78,70 @@ CREATE POLICY "municipalities_admin_delete"
   USING (is_admin());
 
 -- ============================================================
--- DADOS — Províncias (Lei nº 3/22 de 2022)
--- Luanda e Icolo e Bengo (nova província autónoma)
+-- DADOS — Províncias
+-- Luanda (Capital: Ingombota) e Icolo e Bengo (Capital: Catete)
 -- ============================================================
 
-INSERT INTO provinces (name, code) VALUES
-  ('Luanda',        'LUA'),
-  ('Icolo e Bengo', 'ICB')
-ON CONFLICT (code) DO NOTHING;
+INSERT INTO provinces (name, code, capital) VALUES
+  ('Luanda',        'LUA', 'Ingombota'),
+  ('Icolo e Bengo', 'ICB', 'Catete')
+ON CONFLICT (code) DO UPDATE SET
+  name = EXCLUDED.name,
+  capital = EXCLUDED.capital;
 
 -- ============================================================
--- DADOS — Municípios de Luanda
--- Após a Lei 3/22, Luanda ficou com 7 municípios
--- (Icolo e Bengo separou-se como província autónoma)
+-- DADOS — Província de Luanda (16 Municípios)
+-- Sede (capital): Município da Ingombota
+-- 1. Belas, 2. Cacuaco, 3. Camama, 4. Cazenga, 5. Hoji-ya-Henda,
+-- 6. Ingombota (Capital), 7. Kilamba, 8. Kilamba Kiaxi, 9. Maianga,
+-- 10. Mulenvos, 11. Mussulo, 12. Rangel, 13. Samba, 14. Sambizanga,
+-- 15. Talatona, 16. Viana (inclui Zango)
 -- ============================================================
 
-INSERT INTO municipalities (province_id, name)
-SELECT p.id, m.name
+INSERT INTO municipalities (province_id, name, is_capital)
+SELECT p.id, m.name, (m.name = 'Ingombota')
 FROM provinces p
 CROSS JOIN (
   VALUES
-    ('Luanda'),
-    ('Viana'),
-    ('Cacuaco'),
-    ('Cazenga'),
     ('Belas'),
+    ('Cacuaco'),
+    ('Camama'),
+    ('Cazenga'),
+    ('Hoji-ya-Henda'),
+    ('Ingombota'),
+    ('Kilamba'),
     ('Kilamba Kiaxi'),
-    ('Quissama')
+    ('Maianga'),
+    ('Mulenvos'),
+    ('Mussulo'),
+    ('Rangel'),
+    ('Samba'),
+    ('Sambizanga'),
+    ('Talatona'),
+    ('Viana')
 ) AS m(name)
 WHERE p.code = 'LUA'
 ON CONFLICT (province_id, name) DO NOTHING;
 
 -- ============================================================
--- DADOS — Municípios de Icolo e Bengo
--- Nova província criada pela Lei nº 3/22 de 2022
+-- DADOS — Província do Icolo e Bengo (7 Municípios)
+-- Sede (capital): Município de Catete
+-- 1. Bom Jesus, 2. Cabiri, 3. Cabo Ledo, 4. Calumbo,
+-- 5. Catete (Capital), 6. Quiçama, 7. Sequele
 -- ============================================================
 
-INSERT INTO municipalities (province_id, name)
-SELECT p.id, m.name
+INSERT INTO municipalities (province_id, name, is_capital)
+SELECT p.id, m.name, (m.name = 'Catete')
 FROM provinces p
 CROSS JOIN (
   VALUES
-    ('Icolo e Bengo'),
-    ('Catete'),
+    ('Bom Jesus'),
     ('Cabiri'),
-    ('Funda'),
-    ('Zenza do Itombe'),
-    ('Calumbo')
+    ('Cabo Ledo'),
+    ('Calumbo'),
+    ('Catete'),
+    ('Quiçama'),
+    ('Sequele')
 ) AS m(name)
 WHERE p.code = 'ICB'
 ON CONFLICT (province_id, name) DO NOTHING;
