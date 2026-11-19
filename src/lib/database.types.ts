@@ -25,6 +25,28 @@ export interface BankRow {
   id: string
   name: string
   logo_url: string | null
+  short_code: string | null
+  primary_color: string | null
+  website_url: string | null
+  is_active: boolean
+  created_at: string
+}
+
+// ----------------------------------------------------------------
+// Provinces & Municipalities (Lei nº 3/22 de Angola)
+// ----------------------------------------------------------------
+
+export interface ProvinceRow {
+  id: string
+  name: string
+  code: string
+  created_at: string
+}
+
+export interface MunicipalityRow {
+  id: string
+  province_id: string
+  name: string
   created_at: string
 }
 
@@ -50,6 +72,7 @@ export interface AtmRow {
   name: string
   address: string
   municipality: string
+  municipality_id: string | null
   neighborhood: string | null
   lat: number
   lng: number
@@ -59,6 +82,7 @@ export interface AtmRow {
   approved_by: string | null
   approved_at: string | null
   created_at: string
+  updated_at: string | null
 }
 
 export interface ReportRow {
@@ -83,6 +107,24 @@ export interface BankInsert {
   id?: string
   name: string
   logo_url?: string | null
+  short_code?: string | null
+  primary_color?: string | null
+  website_url?: string | null
+  is_active?: boolean
+  created_at?: string
+}
+
+export interface ProvinceInsert {
+  id?: string
+  name: string
+  code: string
+  created_at?: string
+}
+
+export interface MunicipalityInsert {
+  id?: string
+  province_id: string
+  name: string
   created_at?: string
 }
 
@@ -105,6 +147,7 @@ export interface AtmInsert {
   name: string
   address: string
   municipality: string
+  municipality_id?: string | null
   neighborhood?: string | null
   lat: number
   lng: number
@@ -114,6 +157,7 @@ export interface AtmInsert {
   approved_by?: string | null
   approved_at?: string | null
   created_at?: string
+  updated_at?: string | null
 }
 
 export interface ReportInsert {
@@ -138,6 +182,7 @@ export interface AtmUpdate {
   name?: string
   address?: string
   municipality?: string
+  municipality_id?: string | null
   neighborhood?: string | null
   lat?: number
   lng?: number
@@ -145,6 +190,7 @@ export interface AtmUpdate {
   status?: AtmStatus
   approved_by?: string | null
   approved_at?: string | null
+  updated_at?: string | null
 }
 
 // ----------------------------------------------------------------
@@ -159,6 +205,25 @@ export interface Database {
         Insert: BankInsert
         Update: Partial<BankInsert>
         Relationships: []
+      }
+      provinces: {
+        Row: ProvinceRow
+        Insert: ProvinceInsert
+        Update: Partial<ProvinceInsert>
+        Relationships: []
+      }
+      municipalities: {
+        Row: MunicipalityRow
+        Insert: MunicipalityInsert
+        Update: Partial<MunicipalityInsert>
+        Relationships: [
+          {
+            foreignKeyName: 'municipalities_province_id_fkey'
+            columns: ['province_id']
+            referencedRelation: 'provinces'
+            referencedColumns: ['id']
+          }
+        ]
       }
       profiles: {
         Row: ProfileRow
@@ -195,6 +260,12 @@ export interface Database {
             foreignKeyName: 'atms_bank_id_fkey'
             columns: ['bank_id']
             referencedRelation: 'banks'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'atms_municipality_id_fkey'
+            columns: ['municipality_id']
+            referencedRelation: 'municipalities'
             referencedColumns: ['id']
           },
           {
